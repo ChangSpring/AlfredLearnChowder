@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    //定义公共自定义属性
+    <attr name="titleSize" format="dimension"/>
+
+    <declare-styleable name="QQHealthView">
+        <attr name="titleColor" format="color"/>
+        <attr name="lineColor" format="color"/>
+    </declare-styleable>
+</resources>
