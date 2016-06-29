@@ -1,11 +1,11 @@
 package com.alfred.chowder.ui.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.alfred.chowder.R;
-import com.alfred.chowder.ui.base.BaseActivity;
 
-public class CustomActivity extends BaseActivity {
+public class CustomActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
