@@ -18,6 +18,7 @@
         android:layout_width="match_parent"
         android:id="@+id/edittext"
         android:inputType="numberDecimal"
+        android:text="263542.215"
         android:layout_height="wrap_content"/>
 
 </RelativeLayout>

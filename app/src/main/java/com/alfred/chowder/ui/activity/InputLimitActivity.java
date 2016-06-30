@@ -31,6 +31,7 @@ public class InputLimitActivity extends BaseActivity {
 		mEditText = (EditText) findViewById(R.id.edittext);
 //		mEditText.addTextChangedListener(mTextWatcher);
 		mEditText.addTextChangedListener(new TextWatcher() {
+
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 				Log.i("InputLimitActivity", "beforeTextChanged");
@@ -50,18 +51,8 @@ public class InputLimitActivity extends BaseActivity {
 				if (start == 0 && s.toString().equals(".") && count == 1) {
 					//输入的第一个字符为"."
 					mEditText.setText("");
-				} else {
-
-				}
-
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-				Log.i("InputLimitActivity", "afterTextChanged");
-				Log.i("afterTextChanged", "s = " + s);
-				if (s.length() >= INTEGER_COUNT + 1) {
-					//当整数位数输入到达被要求的上线
+				} else if (s.length() >= INTEGER_COUNT + 1 && count != 0) {
+					//当整数位数输入到达被要求的上限,并且当前在输入字符,而不是减少字符
 					if (s.toString().contains(".")) {
 						//当前输入的有"."字符
 						String[] text = s.toString().split("\\.");
@@ -79,6 +70,14 @@ public class InputLimitActivity extends BaseActivity {
 						mEditText.setSelection(s.toString().length() - 1);
 					}
 				}
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				Log.i("InputLimitActivity", "afterTextChanged");
+				Log.i("afterTextChanged", "s = " + s);
+
 
 			}
 		});
