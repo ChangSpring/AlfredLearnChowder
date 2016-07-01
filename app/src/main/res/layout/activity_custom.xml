@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.alfred.chowder.ui.activity.CustomActivity">
 
-    <com.alfred.chowder.widget.RocketRiseView
+    <com.alfred.chowder.widget.CustomView
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

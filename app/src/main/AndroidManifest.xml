@@ -14,14 +14,19 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".ui.activity.CustomActivity">
+
+        </activity>
+        <activity android:name=".ui.activity.InputLimitActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.QQHealthViewActivity"
+            android:label="@string/activity_title_qq_health">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity android:name=".ui.activity.InputLimitActivity">
-
         </activity>
     </application>
 
