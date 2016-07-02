@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -57,6 +58,8 @@ public class QQHealthView extends View {
 
 	private float mArcNumber;
 	private float mWeavX, mWeavY;
+
+	private RectF mRectF;
 
 
 	public QQHealthView(Context context) {
@@ -170,15 +173,20 @@ public class QQHealthView extends View {
 //		mPath.arcTo(100, 100, 500, 500,140, 270, false);
 //		Log.i("QQHealthView", "width = " + mViewWidth);
 //		Log.i("QQHealthView", "Height = " + mViewHeight);
-		mPath.arcTo(mViewWidth * 1 / 4, mViewWidth * 1 / 4, mViewWidth * 3 / 4, mViewWidth * 3 / 4, 135, 270, false);
-		canvas.drawPath(mPath, mArcPaint);
+
+//		mPath.arcTo(mViewWidth * 1 / 4, mViewWidth * 1 / 4, mViewWidth * 3 / 4, mViewWidth * 3 / 4, 135, 270, false);
+//		canvas.drawPath(mPath, mArcPaint);
+		mRectF = new RectF(mViewWidth * 4, mViewWidth * 4, mViewWidth * 3 / 4, mViewWidth * 3 / 4);
+		canvas.drawArc(mRectF, 135, 270, false, mArcPaint);
 
 		mArcPaint.setColor(getResources().getColor(R.color.colorQQHealthBlue));
 		mPath.reset();
 
 		Log.e("QQHealthView", "mArcNumber = " + mArcNumber);
-		mPath.arcTo(mViewWidth / 4, mViewWidth / 4, mViewWidth * 3 / 4, mViewWidth * 3 / 4, 135, mArcNumber, false);
-		canvas.drawPath(mPath, mArcPaint);
+//		mPath.arcTo(mViewWidth / 4, mViewWidth / 4, mViewWidth * 3 / 4, mViewWidth * 3 / 4, 135, mArcNumber, false);
+//		canvas.drawPath(mPath, mArcPaint);
+
+		canvas.drawArc(mRectF, 135, mArcNumber, false, mArcPaint);
 
 		mPaint.reset();
 		mPaint.setAntiAlias(true);
