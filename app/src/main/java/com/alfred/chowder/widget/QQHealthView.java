@@ -37,6 +37,7 @@ public class QQHealthView extends View {
 	 * 背景左上角右上角的圆角半径
 	 */
 	private int mRadiuBg;
+	//
 
 	private Paint mPaint;
 	private Paint mTextPaint;
@@ -104,6 +105,11 @@ public class QQHealthView extends View {
 
 	}
 
+	/**
+	 * 计算数组中的最大值
+	 *
+	 */
+
 	private void findMaxNumber(int[] numbers) {
 		for (int i = 0; i < 1; i++) {
 			for (int j = 0; j < numbers.length - 1 - i; j++) {
@@ -147,6 +153,7 @@ public class QQHealthView extends View {
 		super.onDraw(canvas);
 
 		//绘制底部的背景
+		//左上角,右上角为圆角,左下角右下角为直角
 		mRadiuBg = mViewWidth / 20;
 		mPath.moveTo(0, mViewHeight);
 		mPath.lineTo(0, mRadiuBg);
