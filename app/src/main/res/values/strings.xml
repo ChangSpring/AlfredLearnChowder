@@ -2,6 +2,8 @@
     <string name="app_name">AlfredLearnChowder</string>
 
     <string name="activity_title_qq_health">QQ健康</string>
+    <string name="activity_title_rx_sample">RxJava</string>
+    <string name="activity_title_rx_retrofit">RxJava和Retrofit结合实践</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
