@@ -1,20 +1,94 @@
 apply plugin: 'com.android.application'
 
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "com.alfred.chowder"
+        //multiDexEnabled true
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        //dex突破65536的限制
+        multiDexEnabled true
+        //默认是umeng的渠道
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "umeng"]
     }
+    //跳过lint检查
+    lintOptions {
+        abortOnError false
+    }
+
+    //签名配置
+    signingConfigs{
+        debug{
+
+        }
+
+        release{
+//            storeFile file("keystore/XXX.keystore")
+//            storePassword "your password"
+//            keyPassword "key password"
+//            keyAlias "alias"
+        }
+    }
+
+    //友盟多渠道打包
+    productFlavors {
+        baidu {
+            applicationId "com.example.jiam.asynctaskdemo.baidu"
+
+        }
+        xiaomi {
+            applicationId "com.example.jiam.asynctaskdemo.xiaomi"
+        }
+    }
+    //遍历productFlavors所有的渠道包
+    productFlavors.all {
+        productFlavors -> productFlavors.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
+
     buildTypes {
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            //什么意思?
+            versionNameSuffix "-debug"
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debug
+        }
         release {
+            //是否混淆代码
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            //不显示log
+            buildConfigField "boolean","LOG_DEBUG","false"
+            minifyEnabled true
+            zipAlignEnabled true
+            //移除无用的resource文件
+            shrinkResources true
+            signingConfig signingConfigs.release
+
+            applicationVariants.all {applicationVariants ->
+                applicationVariants.outputs.each{ output ->
+                    def  outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')){
+                        //输出apk的名称为
+                        def fileName = "${defaultConfig.applicationId}_v${defaultConfig.versionName}_${releaseTime()}_${applicationVariants.productFlavors[0].name}.apk"
+                        output.outputFile = new File(outputFile.parent,fileName)
+                    }
+
+                }
+
+            }
         }
     }
 }
@@ -36,4 +110,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
     compile 'com.squareup.okhttp:okhttp:2.4.0'
+    compile 'com.android.support:multidex:1.0.1'
+
 }

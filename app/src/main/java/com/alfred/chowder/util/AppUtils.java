@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import com.alfred.chowder.global.MyApplication;
+import com.alfred.chowder.ui.AlfredApplication;
 
 /**
  * 跟app相关的辅助类
@@ -41,9 +41,9 @@ public class AppUtils {
      */
     public static String getVersionName() {
         try {
-            PackageManager packageManager = MyApplication.getGlabalContext().getPackageManager();
+            PackageManager packageManager = AlfredApplication.getGlabalContext().getPackageManager();
             PackageInfo packageInfo = packageManager.getPackageInfo(
-                    MyApplication.getGlabalContext().getPackageName(), 0);
+                    AlfredApplication.getGlabalContext().getPackageName(), 0);
             return packageInfo.versionName;
 
         } catch (PackageManager.NameNotFoundException e) {
@@ -59,9 +59,9 @@ public class AppUtils {
      */
     public static int getVersionCode() {
         try {
-            PackageManager packageManager = MyApplication.getGlabalContext().getPackageManager();
+            PackageManager packageManager = AlfredApplication.getGlabalContext().getPackageManager();
             PackageInfo packageInfo = packageManager.getPackageInfo(
-                    MyApplication.getGlabalContext().getPackageName(), 0);
+                    AlfredApplication.getGlabalContext().getPackageName(), 0);
             return packageInfo.versionCode;
 
         } catch (PackageManager.NameNotFoundException e) {
