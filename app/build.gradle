@@ -28,14 +28,17 @@ android {
     //签名配置
     signingConfigs{
         debug{
-
+            storeFile file("keystore/alfred.jks")
+            storePassword "Alfred0728"
+            keyPassword "Alfred0728"
+            keyAlias "ChangSpring"
         }
 
         release{
-//            storeFile file("keystore/XXX.keystore")
-//            storePassword "your password"
-//            keyPassword "key password"
-//            keyAlias "alias"
+            storeFile file("keystore/alfred.jks")
+            storePassword "Alfred0728"
+            keyPassword "Alfred0728"
+            keyAlias "ChangSpring"
         }
     }
 
@@ -100,6 +103,7 @@ dependencies {
     compile 'com.android.support:design:23.4.0'
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.support:cardview-v7:23.4.0'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
     compile 'com.google.code.gson:gson:2.4'

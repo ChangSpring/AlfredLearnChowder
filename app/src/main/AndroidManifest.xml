@@ -35,6 +35,10 @@
         </activity>
 
         <activity android:name=".ui.activity.AsyncTaskActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.RecyclerViewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
