@@ -2,6 +2,7 @@ package com.alfred.chowder.ui;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 /**
  * Created by JiaM on 16/7/19.
@@ -20,6 +21,7 @@ public class AlfredApplication extends Application {
         super.onCreate();
 
         mGlabalContext = getApplicationContext();
+        Log.i("fadfad","fdasfdsa");
     }
 
     @Override
