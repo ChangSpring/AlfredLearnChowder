@@ -7,4 +7,13 @@
         <attr name="titleColor" format="color"/>
         <attr name="lineColor" format="color"/>
     </declare-styleable>
+
+    <declare-styleable name="temperatureProgress">
+        <!--圆弧宽度-->
+        <attr name="progressWidth" format="dimension"/>
+        <!--当前温度数值-->
+        <attr name="tempText" format="string"/>
+        <!--当前温度数值大小-->
+        <attr name="tempTextSize" format="dimension"/>
+    </declare-styleable>
 </resources>
