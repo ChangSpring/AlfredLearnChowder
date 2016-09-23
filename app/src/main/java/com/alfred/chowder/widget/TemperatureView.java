@@ -218,6 +218,12 @@ public class TemperatureView extends View {
 
     /**
      * 指针（这里分为左右部分是为了画出来的指针有立体感）
+     * <p>
+     * 其实指针部分可以一次性绘制完，但是为了看起来有点立体感，就将它分为左右两部分，但是都是类似的。
+     * <p>
+     * 就拿左半部分来说：首先将画笔移动到中心圆的边缘 ( leftPointerPath.moveTo(pointRadius/2, 0)  )，然后来个弧度是让指针的根部为弧形的，接下来是指针的长度（长度＝刻度弧的半径(scaleArcRadius) － 长刻度的长度(mLongTikeHeight) － 刻度值与刻度的间隔(dp2px(15)) － 尾部与刻度值的间隔(dp2px(OFFSET))），最后再将它们连接起来。
+     * <p>
+     * 指针上的圆意思是指针根部灰色的小圆，这样看起来指针的根部是有个小洞的。
      *
      * @param canvas
      */
@@ -264,6 +270,9 @@ public class TemperatureView extends View {
 
     /**
      * 刻度弧
+     * <p>
+     * 这里只给出了右半部分的刻度，左半部分类似。绘制时先是旋转角度（一共240度，分成40份，每次旋转6度），然后再画直线；         画直线时还要判断如果是 5的倍数，就画长一点，并且标上刻度值，就是那些 0，5，10，15…
+     * 这里是右半部分，所以刻度值是 从20开始，总共是 20个刻度。最后要注意画布回正 canvas.rotate(-mAngle * mTikeCount/2 - 6, 0, 0) 。
      *
      * @param canvas
      */

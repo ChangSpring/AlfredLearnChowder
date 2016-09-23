@@ -45,6 +45,7 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment im
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_base_list, container, false);
         ButterKnife.bind(this, view);
         return view;
