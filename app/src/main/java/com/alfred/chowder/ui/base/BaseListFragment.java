@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.alfred.chowder.R;
 import com.alfred.chowder.bean.Entity;
+import com.alfred.chowder.util.LogUtils;
 
 import java.util.List;
 
@@ -45,7 +46,6 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment im
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_base_list, container, false);
         ButterKnife.bind(this, view);
         return view;
@@ -55,11 +55,11 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment im
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        swipeRefreshLayout.setColorSchemeColors(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_green_light, android.R.color.holo_orange_light);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_green_light, android.R.color.holo_orange_light);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
 
-        recyclerView.setHasFixedSize(true);
+//        recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -75,6 +75,7 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment im
 
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                swipeRefreshLayout.setRefreshing(false);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 == adapter.getItemCount()) {
                     //请求网络
                     if (adapter != null){
@@ -83,12 +84,16 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment im
                 }
             }
         });
+
+        onStartRefresh();
     }
 
     @Override
     public void onRefresh() {
-//        swipeRefreshLayout.setRefreshing(true);
+        LogUtils.i("onRefresh");
+        swipeRefreshLayout.setRefreshing(false);
         if (adapter != null){
+            LogUtils.i("adapter = " + adapter);
             adapter.addFirstPageDatas(onStartRefresh());
         }
     }

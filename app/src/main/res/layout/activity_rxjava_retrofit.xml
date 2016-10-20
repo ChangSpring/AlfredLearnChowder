@@ -10,13 +10,26 @@
         android:layout_height="wrap_content"
         android:text="click me"/>
 
-    <TextView
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/reault_rxjava_retrofit_tv"
-        android:text="Hello World ! "
-        android:layout_marginTop="10dp"
-        android:padding="10dp"
-        android:textSize="16sp"/>
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/result_rxjava_retrofit_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:text="Hello World ! "
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

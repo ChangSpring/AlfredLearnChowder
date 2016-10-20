@@ -1,5 +1,6 @@
 package com.alfred.chowder.ui.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,11 +15,13 @@ import android.view.ViewGroup;
 public abstract class BaseFragment  extends Fragment{
 
     protected Context mContext;
+    protected Activity mActivity;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+        mActivity = (Activity)context;
     }
 
 

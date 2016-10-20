@@ -3,6 +3,10 @@
           package="com.alfred.chowder">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.CHANGE_NEWWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
 
     <application
         android:name=".ui.AlfredApplication"
@@ -33,17 +37,17 @@
             android:name=".ui.activity.RxJavaAndRetrofitActivity"
             android:label="@string/activity_title_rx_retrofit">
 
-        </activity>
-
-        <activity android:name=".ui.activity.AnimationActivity"></activity>
-
-        <activity android:name=".ui.activity.RecyclerViewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
+
+        <activity android:name=".ui.activity.AnimationActivity"/>
+
+        <activity android:name=".ui.activity.RecyclerViewActivity"></activity>
         <activity android:name=".ui.activity.AutoScrollViewPagerActivity">
 
 
@@ -52,6 +56,8 @@
         <activity android:name=".ui.activity.WebviewActivity">
 
         </activity>
+
+        <activity android:name=".ui.activity.GPSDataTestActivity"></activity>
     </application>
 
 </manifest>
