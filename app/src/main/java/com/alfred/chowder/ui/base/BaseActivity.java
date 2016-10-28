@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 public class BaseActivity extends AppCompatActivity {
 
-    public static String tag;
+    protected String tag;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
