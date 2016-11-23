@@ -2,6 +2,8 @@ package com.alfred.chowder.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -18,6 +20,7 @@ import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +28,11 @@ import com.alfred.chowder.R;
 import com.alfred.chowder.ui.base.BaseActivity;
 
 import java.util.Iterator;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Alfred on 16/10/10.
@@ -34,14 +42,19 @@ public class GPSDataTestActivity extends BaseActivity implements SensorEventList
 
     private int mGPSCount = 0;
 
-    private TextView mGpsStrengthTv;
+    @Bind(R.id.tv_gps_data_count)
+    TextView mGpsStrengthTv;
+    @Bind(R.id.start_gps_data_btn)
+    Button startBtn;
+    @Bind(R.id.end_gps_data_btn)
+    Button endBtn;
 
     private Sensor mSensor;
     private SensorManager mSensorManager;
     private LocationManager mLocationManager;
     private TelephonyManager mTelephonyManager;
 
-    private static final String TAG = "GPSDataTestActivity";
+    private static final String TAG = GPSDataTestActivity.class.getSimpleName();
 
     GpsStatus.Listener gpsS = new GpsStatus.Listener() {
         @Override
@@ -143,7 +156,7 @@ public class GPSDataTestActivity extends BaseActivity implements SensorEventList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gps_data);
 
-        mGpsStrengthTv = (TextView) findViewById(R.id.tv_gps_data_count);
+        ButterKnife.bind(this);
 
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -167,24 +180,42 @@ public class GPSDataTestActivity extends BaseActivity implements SensorEventList
 
             // 1秒更新一次，或最小位移变化超过1米更新一次；
             // 注意：此处更新准确度非常低，推荐在service里面启动一个Thread，在run中sleep(10000);然后执行handler.sendMessage(),更新位置
-            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER
-                    , 1000
-                    , 1
-                    , mLocationListener);
+
         } catch (SecurityException e) {
             e.printStackTrace();
         }
 
+        StringBuilder sb = new StringBuilder();
+        PackageManager amgr = getPackageManager();
+        List<ApplicationInfo> infos = amgr.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES);
+        for (ApplicationInfo info : infos) {
+            if ((info.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+                sb.append(amgr.getApplicationLabel(info));
+                sb.append("\\u007c");
+            }
+
+        }
+        Log.e(TAG,sb.toString().substring(0,sb.toString().length()));
+
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    @OnClick(R.id.start_gps_data_btn)
+    public void start() {
         try {
+            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER
+                    , 1000
+                    , 1
+                    , mLocationListener);
             mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @OnClick(R.id.end_gps_data_btn)
+    public void end() {
+        mLocationManager.removeGpsStatusListener(gpsS);
+        mSensorManager.unregisterListener(this);
     }
 
     /**
@@ -220,7 +251,6 @@ public class GPSDataTestActivity extends BaseActivity implements SensorEventList
 //        }
 //
 //        Log.i(TAG, " 获取邻区基站信息:" + sb.toString());
-        Log.i(TAG, "==============================");
     }
 
     @Override
@@ -229,7 +259,7 @@ public class GPSDataTestActivity extends BaseActivity implements SensorEventList
         float xValue = sensorEvent.values[0];// Acceleration minus Gx on the x-axis
         float yValue = sensorEvent.values[1];//Acceleration minus Gy on the y-axis
         float zValue = sensorEvent.values[2];//Acceleration minus Gz on the z-axis
-//        Log.i(TAG, "x轴： " + xValue + "  y轴： " + yValue + "  z轴： " + zValue);
+        Log.i(TAG, "x轴： " + xValue + "  y轴： " + yValue + "  z轴： " + zValue);
 //        if (xValue > mGravity) {
 //            mTvInfo.append("\n重力指向设备左边");
 //        } else if (xValue < -mGravity) {

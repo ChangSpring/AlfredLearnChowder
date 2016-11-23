@@ -11,4 +11,18 @@
         android:layout_margin="20dp"
         android:text="卫星的个数"/>
 
+    <Button
+        android:id="@+id/start_gps_data_btn"
+        android:text="开始"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/end_gps_data_btn"
+        android:text="结束"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+
 </LinearLayout>
