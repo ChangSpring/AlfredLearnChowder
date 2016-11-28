@@ -10,5 +10,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context="com.alfred.learn.ui.base.BaseListFragment"
+    tools:context="com.alfred.study.ui.base.BaseListFragment"
     tools:listitem="@layout/fragment_base_list"/>

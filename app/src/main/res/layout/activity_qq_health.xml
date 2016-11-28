@@ -5,7 +5,7 @@
               android:background="@color/colorGray"
               android:padding="15dp">
 
-    <com.alfred.learn.widget.QQHealthView
+    <com.alfred.study.widget.QQHealthView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
