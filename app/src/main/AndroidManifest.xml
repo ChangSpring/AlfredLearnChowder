@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.alfred.chowder">
+          package="com.alfred.learn">
 
     <uses-permission android:name="android.permission.CHANGE_NEWWORK_STATE"/>
     <!-- 这个权限用于进行网络定位-->
@@ -22,66 +22,68 @@
     <!-- SD卡读取权限，用户写入离线定位数据-->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
 
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
 
     <application
-        android:name=".ui.AlfredApplication"
+        android:name="com.alfred.learn.ui.AlfredApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.alfred.chowder.ui.activity.MainActivity"
+            android:name="com.alfred.learn.ui.activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
-        <activity android:name=".ui.activity.InputLimitActivity">
+        <activity android:name="com.alfred.learn.ui.activity.InputLimitActivity">
 
         </activity>
 
         <activity
-            android:name=".ui.activity.QQHealthViewActivity"
+            android:name="com.alfred.learn.ui.activity.QQHealthViewActivity"
             android:label="@string/activity_title_qq_health">
         </activity>
 
         <activity
-            android:name=".ui.activity.RxJavaAndRetrofitActivity"
+            android:name="com.alfred.learn.ui.activity.RxJavaAndRetrofitActivity"
             android:label="@string/activity_title_rx_retrofit">
 
 
         </activity>
 
-        <activity android:name=".ui.activity.AnimationActivity"/>
+        <activity android:name="com.alfred.learn.ui.activity.AnimationActivity"/>
 
-        <activity android:name=".ui.activity.RecyclerViewActivity"/>
-        <activity android:name=".ui.activity.AutoScrollViewPagerActivity">
+        <activity android:name="com.alfred.learn.ui.activity.RecyclerViewActivity"/>
+        <activity android:name="com.alfred.learn.ui.activity.AutoScrollViewPagerActivity">
 
-
-        </activity>
-
-        <activity android:name=".ui.activity.WebviewActivity">
 
         </activity>
 
-        <activity android:name=".ui.activity.GPSDataTestActivity">
+        <activity android:name="com.alfred.learn.ui.activity.WebviewActivity">
 
         </activity>
 
-        <activity android:name=".ui.activity.ADBShellActivity">
-
-        </activity>
-        <activity android:name=".ui.activity.TimerActivity">
+        <activity android:name="com.alfred.learn.ui.activity.GPSDataTestActivity">
 
         </activity>
 
-        <activity android:name=".ui.activity.LocationActivity">
+        <activity android:name="com.alfred.learn.ui.activity.ADBShellActivity">
+
+        </activity>
+        <activity android:name="com.alfred.learn.ui.activity.TimerActivity">
+
         </activity>
 
-        <activity android:name=".ui.activity.CompassActivity">
+        <activity android:name="com.alfred.learn.ui.activity.LocationActivity">
         </activity>
 
-        <activity android:name=".ui.activity.OrientationActivity">
+        <activity android:name="com.alfred.learn.ui.activity.CompassActivity">
+        </activity>
+
+        <activity android:name="com.alfred.learn.ui.activity.OrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

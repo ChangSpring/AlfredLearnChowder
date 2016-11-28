@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.alfred.chowder.ui.activity.CustomActivity">
+    tools:context="com.alfred.learn.ui.activity.CustomActivity">
 
-    <com.alfred.chowder.widget.CustomView
+    <com.alfred.learn.widget.CustomView
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
