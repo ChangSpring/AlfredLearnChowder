@@ -15,9 +15,14 @@ android {
         versionCode 1
         versionName "1.0"
         //dex突破65536的限制
-//        multiDexEnabled true
+        multiDexEnabled true
         //默认是umeng的渠道
 //        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "umeng"]
+
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
     }
     //跳过lint检查
     lintOptions {
@@ -66,7 +71,7 @@ android {
             signingConfig signingConfigs.debug
 
             buildConfigField "boolean", "LOG_DEBUG", "true"
-            buildConfigField "String", "BUGLY_APP_ID","\"746958606b\""
+            buildConfigField "String", "BUGLY_APP_ID", "\"746958606b\""
         }
 
         release {
@@ -92,8 +97,115 @@ android {
             }
 
             buildConfigField "boolean", "LOG_DEBUG", "false"
-            buildConfigField "String", "BUGLY_APP_ID","746958606b"
+            buildConfigField "String", "BUGLY_APP_ID", "\"746958606b\""
+        }
+    }
+}
 
+def bakPath = file("${buildDir}/bakApk/")
+/**
+ * you can use assembleRelease to build you base apk
+ * use tinkerPatchRelease -POLD_APK=  -PAPPLY_MAPPING=  -PAPPLY_RESOURCE= to build patch
+ * add apk from the build/bakApk
+ */
+ext {
+    // for some reason, you may want to ignore tinkerBuild, such as instant run debug build?
+    // 使用tinker，将不能使用 instant run
+    //开启tink_support插件
+    tinkerEnabled = true
+
+    // for normal build
+    // old apk file to build patch apk
+    tinkerOldApkPath = "${bakPath}/app-release-1124-23-03-52.apk"
+//    // proguard mapping file to build patch apk
+    tinkerApplyMappingPath = "${bakPath}/app-release-1124-23-03-52-mapping.txt"
+//    // resource R.txt to build patch apk, must input if there is resource changed
+    tinkerApplyResourcePath = "${bakPath}/app-release-1124-23-03-52-R.txt"
+//
+//    // only use for build all flavor, if not, just ignore this field
+    tinkerBuildFlavorDirectory = "${bakPath}/app-release-1124-23-03-52"
+}
+
+def buildWithTinker() {
+    return hasProperty("TINKER_ENABLE") ? TINKER_ENABLE : ext.tinkerEnabled
+}
+
+def getOldApkPath() {
+    return hasProperty("OLD_APK") ? OLD_APK : ext.tinkerOldApkPath
+}
+
+def getApplyMappingPath() {
+    return hasProperty("APPLY_MAPPING") ? APPLY_MAPPING : ext.tinkerApplyMappingPath
+}
+
+def getApplyResourceMappingPath() {
+    return hasProperty("APPLY_RESOURCE") ? APPLY_RESOURCE : ext.tinkerApplyResourcePath
+}
+
+/**
+ * 更多Tinker插件详细的配置，参考：https://github.com/Tencent/tinker/wiki
+ */
+if (buildWithTinker()) {
+    // 依赖tinker插件
+    apply plugin: 'com.tencent.tinker.patch'
+    apply plugin: 'com.tencent.bugly.tinker-support'
+
+    tinkerSupport {
+    }
+
+    // 全局信息相关配置项
+    tinkerPatch {
+        oldApk = getOldApkPath() //打补丁包时必选，基准包路径
+
+        ignoreWarning = false // 可选，默认false
+
+        useSign = true // 可选，默认true， 验证基准apk和patch签名是否一致
+
+        // 编译相关配置项
+        buildConfig {
+            applyMapping = getApplyMappingPath() //  可选，设置mapping文件，建议保持旧apk的proguard混淆方式
+            applyResourceMapping = getApplyResourceMappingPath() // 可选，设置R.txt文件，通过旧apk文件保持ResId的分配
+            tinkerId = "71828dee6320263d6be1642e456301c67c3af4db" // 必选，当前版本的唯一标识，可以是git版本号、versionName
+//            tinkerId = "dsfasdfadfadsssfassssssssdf"
+        }
+
+        // dex相关配置项
+        dex {
+            dexMode = "jar" // 可选，默认为jar
+            usePreGeneratedPatchDex = true // 可选，默认为false
+            pattern = ["classes*.dex",
+                       "assets/secondary-dex-?.jar"]
+            // 必选
+            loader = ["com.tencent.tinker.loader.*",
+                      "com.tencent.bugly.hotfix.SampleApplication",
+            ]
+        }
+
+        // lib相关的配置项
+        lib {
+            pattern = ["lib/armeabi/*.so"]
+        }
+
+        // res相关的配置项
+        res {
+            pattern = ["res/*", "assets/*", "resources.arsc", "AndroidManifest.xml"]
+            ignoreChange = ["assets/sample_meta.txt"]
+            largeModSize = 100
+        }
+
+        // 用于生成补丁包中的'package_meta.txt'文件
+        packageConfig {
+            configField("patchMessage", "tinker is sample to use")
+
+            configField("platform", "all")
+
+            configField("patchVersion", "1.0")
+        }
+
+        // 7zip路径配置项，执行前提是useSign为true
+        sevenZip {
+            zipArtifact = "com.tencent.mm:SevenZip:1.1.10" // optional
+            //  path = "/usr/local/bin/7za" // optional
         }
     }
 }
@@ -116,7 +228,13 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
     compile 'com.squareup.okhttp:okhttp:2.4.0'
+    // 多dex配置
     compile 'com.android.support:multidex:1.0.1'
-    compile 'com.tencent.bugly:crashreport:latest.release'
-
+    //注释掉原有bugly的仓库
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.9
+    //compile 'com.tencent.bugly:crashreport:latest.release'
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.0.0
+    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
+    compile 'com.tencent.bugly:nativecrashreport:latest.release'
 }
