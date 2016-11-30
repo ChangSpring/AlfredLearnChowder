@@ -24,10 +24,12 @@ public class FingerPrintActivity extends BaseActivity {
         setContentView(R.layout.activity_finger_print);
 
         mTextView = (TextView) findViewById(R.id.finger_print);
+        mTextView.setText("IMEI : " + getImei() + "\n" + "android_id ：" + getAndroidId() + "\n" + "cpu serial ：" + getCPUSerial());
     }
 
     /**
      * 获取cpu序列号
+     *
      * @return
      */
     public static String getCPUSerial() {
@@ -64,22 +66,24 @@ public class FingerPrintActivity extends BaseActivity {
 
     /**
      * 非手机设备：最开始搭载Android系统都手机设备，而现在也出现了非手机设备：如平板电脑、电子书、电视、音乐播放器等。这些设备没有通话的硬件功能，系统中也就没有TELEPHONY_SERVICE，自然也就无法通过上面的方法      获得DEVICE_ID。
-     权限问题：获取DEVICE_ID需要READ_PHONE_STATE权限，如果只是为了获取DEVICE_ID而没有用到其他的通话功能，申请这个权限一来大才小用，二来部分用户会怀疑软件的安全性。
-     厂商定制系统中的Bug：少数手机设备上，由于该实现有漏洞，会返回垃圾，如:zeros或者asterisks
+     * 权限问题：获取DEVICE_ID需要READ_PHONE_STATE权限，如果只是为了获取DEVICE_ID而没有用到其他的通话功能，申请这个权限一来大才小用，二来部分用户会怀疑软件的安全性。
+     * 厂商定制系统中的Bug：少数手机设备上，由于该实现有漏洞，会返回垃圾，如:zeros或者asterisks
+     *
      * @return
      */
-    public  String getImei(){
+    public String getImei() {
         TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(TELEPHONY_SERVICE);
         return telephonyManager.getDeviceId();
     }
 
     /**
      * 厂商定制系统的Bug：不同的设备可能会产生相同的ANDROID_ID：9774d56d682e549c。
-     厂商定制系统的Bug：有些设备返回的值为null。
-     设备差异：对于CDMA设备，ANDROID_ID和TelephonyManager.getDeviceId() 返回相同的值。
+     * 厂商定制系统的Bug：有些设备返回的值为null。
+     * 设备差异：对于CDMA设备，ANDROID_ID和TelephonyManager.getDeviceId() 返回相同的值。
+     *
      * @return
      */
-    public String getAndroidId(){
-        return Settings.Secure.getString(this.getContentResolver(),Settings.Secure.ANDROID_ID);
+    public String getAndroidId() {
+        return Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 }
