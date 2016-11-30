@@ -7,24 +7,36 @@ import android.widget.TextView;
 
 import com.alfred.study.R;
 import com.alfred.study.ui.base.BaseActivity;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Alfred on 2016/11/24.
  */
 
 public class FingerPrintActivity extends BaseActivity {
-    private TextView mTextView;
+    @Bind(R.id.finger_print)
+    TextView mTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finger_print);
 
-        mTextView = (TextView) findViewById(R.id.finger_print);
+        ButterKnife.bind(this);
+
         mTextView.setText("IMEI : " + getImei() + "\n" + "android_id ：" + getAndroidId() + "\n" + "cpu serial ：" + getCPUSerial());
+    }
+
+    @OnClick(R.id.test_bugly_finger_print_btn)
+    public void buglyTest() {
+        CrashReport.testJavaCrash();
     }
 
     /**
