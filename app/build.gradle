@@ -112,7 +112,7 @@ ext {
     // for some reason, you may want to ignore tinkerBuild, such as instant run debug build?
     // 使用tinker，将不能使用 instant run
     //开启tink_support插件
-    tinkerEnabled = true
+    tinkerEnabled = false
 
     // for normal build
     // old apk file to build patch apk

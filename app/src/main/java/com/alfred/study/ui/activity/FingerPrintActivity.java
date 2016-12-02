@@ -1,8 +1,14 @@
 package com.alfred.study.ui.activity;
 
+import android.content.Context;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.alfred.study.R;
@@ -11,6 +17,7 @@ import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,6 +31,8 @@ public class FingerPrintActivity extends BaseActivity {
     @Bind(R.id.finger_print)
     TextView mTextView;
 
+    private static final String TAG = FingerPrintActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +40,21 @@ public class FingerPrintActivity extends BaseActivity {
 
         ButterKnife.bind(this);
 
-        mTextView.setText("IMEI : " + getImei() + "\n" + "android_id ：" + getAndroidId() + "\n" + "cpu serial ：" + getCPUSerial());
+        mTextView.setText("IMEI : " + getImei() + "\n" + "android_id ：" + getAndroidId() + "\n" + "cpu serial ：" + getCPUSerial() + "\n" + "wifiinfo :" +
+                getWifiInfo().toString() + "\n" + "ssid : " + getWifiInfo().getSSID());
+
+        Log.i(TAG, "scan results\n");
+        List<ScanResult> list = ((WifiManager) getSystemService(Context.WIFI_SERVICE)).getScanResults();
+        for (ScanResult scanResult : list) {
+            Log.i(TAG, scanResult.SSID);
+        }
+
+        Log.i(TAG, "already connected wifi list : \n");
+        List<WifiConfiguration> configurationList = ((WifiManager) getSystemService(Context.WIFI_SERVICE)).getConfiguredNetworks();
+        for (WifiConfiguration config :
+                configurationList) {
+            Log.i(TAG, config.SSID);
+        }
     }
 
     @OnClick(R.id.test_bugly_finger_print_btn)
@@ -39,12 +62,15 @@ public class FingerPrintActivity extends BaseActivity {
         CrashReport.testJavaCrash();
     }
 
+
+
+
     /**
      * 获取cpu序列号
      *
      * @return
      */
-    public static String getCPUSerial() {
+    private String getCPUSerial() {
         String str = "", strCPU = "", cpuAddress = "0000000000000000";
         try {
             //读取CPU信息
@@ -83,7 +109,7 @@ public class FingerPrintActivity extends BaseActivity {
      *
      * @return
      */
-    public String getImei() {
+    private String getImei() {
         TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(TELEPHONY_SERVICE);
         return telephonyManager.getDeviceId();
     }
@@ -95,7 +121,14 @@ public class FingerPrintActivity extends BaseActivity {
      *
      * @return
      */
-    public String getAndroidId() {
+    private String getAndroidId() {
         return Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
+
+    private WifiInfo getWifiInfo() {
+        WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
+        return wifiManager.getConnectionInfo();
+    }
+
+
 }
