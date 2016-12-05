@@ -19,9 +19,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * Created by Alfred on 2016/12/1.
- */
+/**k */
 
 public class IMEIActivity extends BaseActivity {
     @Bind(R.id.tv_valid_imei)
@@ -40,7 +38,7 @@ public class IMEIActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(TELEPHONY_SERVICE);
-        validTv.setText(telephonyManager.getDeviceId());
+        validTv.setText("IMEI = " + telephonyManager.getDeviceId());
 
         Log.i(TAG, "file path : " + Environment.getExternalStorageDirectory());
 //        test();
@@ -59,9 +57,6 @@ public class IMEIActivity extends BaseActivity {
         try {
             int validCount = 0, invalidCount = 0;
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-//            FileInputStream inputStream = openFileInput("a.txt");
-//            StringBuffer stringBuffer = new StringBuffer();
-//            DataInputStream dataInputStream = new DataInputStream(inputStream);
             String strLine;
             while ((strLine = bufferedReader.readLine()) != null) {
                 if (strLine.length() != 15 || !isOctNumber(strLine)) {
@@ -75,8 +70,6 @@ public class IMEIActivity extends BaseActivity {
                 }
             }
             bufferedReader.close();
-//            dataInputStream.close();
-//            inputStream.close();
             Log.i(TAG, "invalid count = " + invalidCount);
             Log.i(TAG, "valid count = " + validCount);
 
@@ -85,20 +78,6 @@ public class IMEIActivity extends BaseActivity {
         } catch (NumberFormatException e2) {
             e2.printStackTrace();
         }
-    }
-
-    //十六进制
-    private static boolean isHexNumber(String str) {
-        boolean flag = false;
-        for (int i = 0; i < str.length(); i++) {
-            char cc = str.charAt(i);
-            if (cc == '0' || cc == '1' || cc == '2' || cc == '3' || cc == '4' || cc == '5' || cc == '6' || cc == '7' || cc == '8' || cc == '9' || cc == 'A'
-                    || cc == 'B' || cc == 'C' ||
-                    cc == 'D' || cc == 'E' || cc == 'F' || cc == 'a' || cc == 'b' || cc == 'c' || cc == 'd' || cc == 'e' || cc == 'f') {
-                flag = true;
-            }
-        }
-        return flag;
     }
 
     //十进制 A000004FFD0DA8
