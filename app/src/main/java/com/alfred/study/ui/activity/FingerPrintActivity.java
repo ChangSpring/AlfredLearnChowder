@@ -5,15 +5,16 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.alfred.study.BuildConfig;
 import com.alfred.study.R;
 import com.alfred.study.ui.base.BaseActivity;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
@@ -43,6 +44,8 @@ public class FingerPrintActivity extends BaseActivity {
         mTextView.setText("IMEI : " + getImei() + "\n" + "android_id ：" + getAndroidId() + "\n" + "cpu serial ：" + getCPUSerial() + "\n" + "wifiinfo :" +
                 getWifiInfo().toString() + "\n" + "ssid : " + getWifiInfo().getSSID());
 
+        mTextView.setText(BuildConfig.BUGLY_APP_ID);
+
         Log.i(TAG, "scan results\n");
         List<ScanResult> list = ((WifiManager) getSystemService(Context.WIFI_SERVICE)).getScanResults();
         for (ScanResult scanResult : list) {
@@ -55,11 +58,21 @@ public class FingerPrintActivity extends BaseActivity {
                 configurationList) {
             Log.i(TAG, config.SSID);
         }
+
+        getBoardInfo();
     }
 
     @OnClick(R.id.test_bugly_finger_print_btn)
     public void buglyTest() {
-        CrashReport.testJavaCrash();
+//        CrashReport.testJavaCrash();
+        String test = null;
+        mTextView.setText(test);
+    }
+
+    public void getBoardInfo(){
+        String board = Build.BOARD;
+        Log.i(TAG,"board : " + board);
+        Log.i(TAG,"serial :" + Build.SERIAL);
     }
 
 

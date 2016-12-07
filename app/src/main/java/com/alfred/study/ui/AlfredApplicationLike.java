@@ -12,6 +12,8 @@ import android.support.multidex.MultiDex;
 import com.alfred.study.BuildConfig;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
+import com.tencent.tinker.app.TinkerServerManager;
+import com.tencent.tinker.lib.tinker.Tinker;
 import com.tencent.tinker.loader.app.DefaultApplicationLike;
 
 /**
@@ -45,7 +47,11 @@ public class AlfredApplicationLike extends DefaultApplicationLike {
         // 设置开发设备
         Bugly.setIsDevelopmentDevice(getApplication(), true);
         //初始化bugly
-        Bugly.init(mGlabalContext, BuildConfig.BUGLY_APP_ID,BuildConfig.LOG_DEBUG);
+        Bugly.init(getApplication(), BuildConfig.BUGLY_APP_ID,BuildConfig.LOG_DEBUG);
+
+//        TinkerManager.installTinker(this);
+        TinkerServerManager.installTinkerServer(getApplication(), Tinker.with(getApplication()),1,BuildConfig.THINKER_PATCH_APP_KEY,BuildConfig.THINKER_PATCH_APP_VERSION,"umeng");
+        TinkerServerManager.checkTinkerUpdate(false);
     }
 
 
@@ -56,7 +62,7 @@ public class AlfredApplicationLike extends DefaultApplicationLike {
         // you must install multiDex whatever tinker is installed!
         MultiDex.install(base);
 
-        // TODO: 安装tinker
+        //安装tinker
         Beta.installTinker(this);
     }
 

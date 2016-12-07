@@ -27,6 +27,7 @@
 
     <uses-permission android:name="android.permission.READ_LOGS"/>
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:name="com.alfred.study.ui.AlfredApplication"
@@ -62,7 +63,9 @@
 
         <activity android:name="com.alfred.study.ui.activity.AnimationActivity"/>
 
-        <activity android:name="com.alfred.study.ui.activity.RecyclerViewActivity"/>
+        <activity android:name="com.alfred.study.ui.activity.RecyclerViewActivity">
+
+        </activity>
         <activity android:name="com.alfred.study.ui.activity.AutoScrollViewPagerActivity">
 
 
@@ -92,20 +95,23 @@
         <activity android:name="com.alfred.study.ui.activity.OrientationActivity">
 
         </activity>
-        <activity android:name=".ui.activity.FingerPrintActivity">
+        <activity
+            android:name=".ui.activity.FingerPrintActivity"
+            android:label="FingerPrint">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.activity.IMEIActivity"
             android:label="IMEI">
 
         </activity>
-        <activity android:name=".ui.activity.IOActivity"
+        <activity
+            android:name=".ui.activity.IOActivity"
             android:label="IO">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
 
         </activity>
     </application>

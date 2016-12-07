@@ -71,14 +71,16 @@ public class TestRecyclerViewFragment extends BaseListFragment<Student> {
         AutoScrollViewPager viewPager = (AutoScrollViewPager) view3.findViewById(R.id.vp_banner);
 
         List<View> imageViewList = new ArrayList<>();
-        String[] bannerUrls = {"http://img.sc115.com/uploads/shows/130813/201308132017521074.jpg","http://img.sc115.com/uploads/shows/130813/201308132017521076.jpg","http://img.sc115.com/uploads/shows/130813/201308132017531077.jpg"};
-        for (int i = 0 ; i < bannerUrls.length;i++){
+        String[] bannerUrls = {"http://img.sc115.com/uploads/shows/130813/201308132017521074.jpg", "http://img.sc115" +
+                ".com/uploads/shows/130813/201308132017521076.jpg", "http://img.sc115.com/uploads/shows/130813/201308132017531077.jpg"};
+        for (String url : bannerUrls) {
             ImageView imageView = new ImageView(mContext);
             Glide.with(this)
-                    .load(bannerUrls[i])
+                    .load(url)
                     .into(imageView);
 //            imageView.setImageResource(R.drawable.example_appwidget_preview);
             imageViewList.add(imageView);
+
         }
 
         BannerViewPagerAdapter bannerViewPagerAdapter = new BannerViewPagerAdapter(imageViewList);
@@ -87,8 +89,7 @@ public class TestRecyclerViewFragment extends BaseListFragment<Student> {
         viewPager.setCycle(true);
         viewPager.startAutoScroll();
 
-        adapter.addHeaderView(view3,R.layout.item_recyclerview_banner);
-
+        adapter.addHeaderView(view3, R.layout.item_recyclerview_banner);
 
 
     }
