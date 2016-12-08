@@ -45,7 +45,7 @@ public class AlfredApplicationLike extends DefaultApplicationLike {
         super.onCreate();
         mGlabalContext = getApplication();
         // 设置开发设备
-        Bugly.setIsDevelopmentDevice(getApplication(), true);
+        Bugly.setIsDevelopmentDevice(getApplication(), BuildConfig.LOG_DEBUG);
         //初始化bugly
         Bugly.init(getApplication(), BuildConfig.BUGLY_APP_ID,BuildConfig.LOG_DEBUG);
 

@@ -29,6 +29,8 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+
     <application
         android:name="com.alfred.study.ui.AlfredApplication"
         android:allowBackup="true"
@@ -65,6 +67,7 @@
 
         <activity android:name="com.alfred.study.ui.activity.RecyclerViewActivity">
 
+
         </activity>
         <activity android:name="com.alfred.study.ui.activity.AutoScrollViewPagerActivity">
 
@@ -98,11 +101,6 @@
         <activity
             android:name=".ui.activity.FingerPrintActivity"
             android:label="FingerPrint">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.activity.IMEIActivity"
@@ -113,6 +111,16 @@
             android:name=".ui.activity.IOActivity"
             android:label="IO">
 
+        </activity>
+
+        <activity
+            android:name=".ui.activity.RSAActivity"
+            android:label="RSA加密">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
     </application>
 

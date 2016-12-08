@@ -1,7 +1,12 @@
 package com.alfred.study.ui.fragment;
 
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +30,8 @@ import java.util.List;
 public class TestRecyclerViewFragment extends BaseListFragment<Student> {
 
     private BaseRecyclerViewAdapter adapter;
+
+    private static final String TAG = TestRecyclerViewFragment.class.getName();
 
     @Override
     protected List<Student> onStartRefresh() {
@@ -62,8 +69,6 @@ public class TestRecyclerViewFragment extends BaseListFragment<Student> {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-//        View view = LayoutInflater.from(mContext).inflate(R.layout.item_recyclerview_header, null);
-//        adapter.addHeaderView(view, R.layout.item_recyclerview_header);
         View view2 = LayoutInflater.from(mContext).inflate(R.layout.item_recyclerview_header, null);
         adapter.addHeaderView(view2, R.layout.item_recyclerview_header);
 
@@ -91,6 +96,33 @@ public class TestRecyclerViewFragment extends BaseListFragment<Student> {
 
         adapter.addHeaderView(view3, R.layout.item_recyclerview_banner);
 
+        getContactsInfo();
 
+    }
+
+    public void getContactsInfo() {
+        Uri uri = Uri.parse("content://com.android.contacts/contacts");
+        //获得一个ContentResolver数据共享的对象
+        ContentResolver resolver = mContext.getContentResolver();
+        //取得联系人中开始的游标
+        Cursor cursor = resolver.query(uri, null, null, null, null);
+
+        while (cursor.moveToNext()) {
+            //获得联系人ID
+            String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+            //获得联系人姓名
+            String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+            //获得联系人手机号码
+            Cursor phone = resolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=" +
+                    id, null, null);
+            StringBuilder stringBuilder = new StringBuilder("contact_id = ").append(id).append(" name = ").append(name);
+            while (phone.moveToNext()) {
+                //取得电话号码(可能多个号码)
+                int phoneFieldConlumnIndex = phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                String phoneNumber = phone.getString(phoneFieldConlumnIndex);
+                stringBuilder.append(phoneNumber + "\\");
+            }
+            Log.i(TAG, stringBuilder.toString());
+        }
     }
 }

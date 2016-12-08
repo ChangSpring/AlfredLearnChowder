@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="15dp">
+
+    <EditText
+        android:id="@+id/et_content_rsa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="需要加密的内容"
+        android:padding="3dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_encrypt_rsa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="加密"/>
+
+        <Button
+            android:id="@+id/btn_decrypt_rsa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="解密"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_content_encrypt_rsa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="加密后的数据"/>
+
+    <TextView
+        android:id="@+id/tv_content_decrypt_rsa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="解密后的数据"/>
+
+</LinearLayout>
