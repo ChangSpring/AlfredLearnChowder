@@ -1,7 +1,6 @@
 package com.alfred.study.ui.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -46,7 +45,6 @@ public class RxJavaAndRetrofitActivity extends BaseActivity {
         HttpUtil.getInstance().getTopMovie(new ProgressSubscriber<List<Subject>>(this) {
             @Override
             public void next(List<Subject> subjects) {
-                Log.i(tag, subjects.toString());
                 mResultTv.setText(subjects.toString());
             }
         }, 0, 10);

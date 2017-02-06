@@ -66,6 +66,8 @@ public class ADBShellActivity extends BaseActivity {
             "input tap 540 1240", "input tap 540 1440", "input tap 540 1840",
             "input keyevent 3"};
 
+    private static final String TAG = ADBShellActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -343,15 +345,15 @@ public class ADBShellActivity extends BaseActivity {
             byte buffer[] = new byte[inputStream.available()];
             inputStream.read(buffer);
             content = new String(buffer);
-            Log.i(tag, "read:" + content);
+            Log.i(TAG, "read:" + content);
         } catch (IOException e) {
-            Log.e(tag, "write file", e);
+            Log.e(TAG, "write file", e);
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    Log.e(tag, "close file", e);
+                    Log.e(TAG, "close file", e);
                 }
             }
         }
