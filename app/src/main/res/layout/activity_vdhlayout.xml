@@ -19,17 +19,17 @@
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:background="#44ff0000"
+        android:background="#44ff00"
         android:gravity="center"
-        android:text="I can be dragged !"/>
+        android:text="I will back to origin pos !"/>
 
     <TextView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:background="#44ff0000"
+        android:background="#44ff9900"
         android:gravity="center"
-        android:text="I can be dragged !"/>
+        android:text="use edge tracker to operate me !"/>
 
 </com.alfred.study.widget.VDHLayout>
