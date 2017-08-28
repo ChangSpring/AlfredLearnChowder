@@ -86,15 +86,38 @@
             android:label="RSA加密">
         </activity>
         <activity android:name=".ui.activity.VDHLayoutActivity">
-
         </activity>
         <activity android:name=".ui.activity.LeftDrawerLayoutActivity">
+        </activity>
+        <activity android:name=".service.ServiceActivity">
+        </activity>
+
+        <service
+            android:name=".service.MyService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
+
+        <activity android:name=".service.IntentServiceActivity">
+        </activity>
+
+        <service
+            android:name=".service.MyIntentService"
+            android:exported="false">
+        </service>
+
+        <activity android:name=".cache.DiskCacheActivity">
+        </activity>
+        <activity android:name=".cache.CacheActivity">
+        </activity>
+        <activity android:name=".thread.HandlerThreadActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
+        </activity>
+        <activity android:name=".retrofit.RetrofitActivity">
         </activity>
     </application>
 

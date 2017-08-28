@@ -10,10 +10,12 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.alfred.study.R;
 import com.alfred.study.util.ToastUtils;
+import com.alfred.study.widget.PopupToast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,8 +32,16 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        mTextView.setText(getHandleContent(this, "name", "content", R.color.colorQQHealthBlue, R.mipmap.ic_launcher));
+//        mTextView.setText(getHandleContent(this, "name", "content", R.color.colorQQHealthBlue, R.mipmap.ic_launcher));
 
+        final Button button = (Button)findViewById(R.id.button2);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupToast popupToast = new PopupToast(MainActivity.this);
+                popupToast.show(button);
+            }
+        });
     }
 
     public SpannableStringBuilder getHandleContent(Context context, String name, String caption, int nameColor, int imgRes) {

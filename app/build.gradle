@@ -183,7 +183,7 @@ if (buildWithTinker()) {
                        "assets/secondary-dex-?.jar"]
             // 必选
             loader = ["com.tencent.tinker.loader.*",
-                    //TODO warning, you must change it with your application
+                      //TODO warning, you must change it with your application
                       "com.alfred.study.ui.AlfredApplication"
             ]
         }
@@ -220,7 +220,8 @@ if (buildWithTinker()) {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
+    // 多dex配置
+    //log
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile 'com.android.support:support-v4:23.4.0'
@@ -236,6 +237,8 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
     compile 'com.squareup.okhttp:okhttp:2.4.0'
-    // 多dex配置
     compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.orhanobut:logger:1.15'
+    testCompile 'junit:junit:4.12'
 }
